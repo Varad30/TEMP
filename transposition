@@ -16,7 +16,7 @@ string encrypt(string key,string plain_text){
     }
     int tmp=0,tmp1=0;
         for(int j=0;j<plain_text.length();j++){
-            cout<<tmp<<" "<<j%key.length()<<" "<<j<<endl;
+            // cout<<tmp<<" "<<j%key.length()<<" "<<j<<endl;
             arr[j%key.length()][tmp]=plain_text[j];
             // cout<<arr[j%key.length()][tmp+j%key.length()]<<j%key.length()<<endl;
 
@@ -27,12 +27,12 @@ string encrypt(string key,string plain_text){
 
         }
         double x=ceil((double)plain_text.length()/(double)key.length());
-        for(int i=0;i<key.length();i++){
-            for(int j=0;j<x;j++){
-                cout<<arr[i][j];
-            }
-            cout<<endl;
-        }
+        // for(int i=0;i<key.length();i++){
+        //     for(int j=0;j<x;j++){
+        //         cout<<arr[i][j];
+        //     }
+        //     cout<<endl;
+        // }
         string unsorted_key=key;
         sort(key.begin(),key.end());
         cout<<"COLUMNAR CIPHER: ";
@@ -54,7 +54,7 @@ string decrypt(string key,string sor_key,string encrypted_text){
         if(tmp1>x-1){
             tmp1=0;
         }
-            cout<<tmp<<" "<<i%key.length()<<" "<<encrypted_text[i]<<" "<<tmp1<<endl;
+            // cout<<tmp<<" "<<i%key.length()<<" "<<encrypted_text[i]<<" "<<tmp1<<endl;
 
         arr[tmp][tmp1]=encrypted_text[i];
         tmp1+=1;
@@ -66,12 +66,12 @@ string decrypt(string key,string sor_key,string encrypted_text){
         }
     }
     int temp=0;
-    for(int i=0;i<key.length();i++){
-        for(int j=0;j<x;j++){
-            cout<<arr[i][j];
-            }
-            cout<<"\n";
-        }
+    // for(int i=0;i<key.length();i++){
+    //     for(int j=0;j<x;j++){
+    //         cout<<arr[i][j];
+    //         }
+    //         cout<<"\n";
+    //     }
     int temp1=0;
     for(int j=0;j<x;j++){
     for(int i=0;i<key.length();i++){
@@ -86,10 +86,8 @@ int main(){
     string plain_text;
     cout<<"ENTER PLAIN TEXT: ";
     getline(cin,plain_text);
-    cout<<plain_text.length()<<endl;
-    cout<<"ENTER KEY: ";
+    cout<<"\nENTER KEY: ";
     cin>>key;
-    cout<<key<<endl;
     string encrtpted_text=encrypt(key,plain_text);
     cout<<"ENCRYPTED TEXT: ";
     cout<<encrtpted_text<<endl;
@@ -99,3 +97,5 @@ int main(){
     string decrypted_text=decrypt(unsorted_key,key,encrtpted_text);
     cout<<decrypted_text<<endl;
 }
+
+
