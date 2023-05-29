@@ -1,0 +1,101 @@
+
+#include<iostream>
+#include<string>
+#include<math.h>
+using namespace std;
+
+
+string encrypt(string key,string plain_text){
+    string encrypted_text;
+     int x1=ceil(plain_text.length()/(double)key.length());
+    char arr[key.length()][x1];
+    for(int i=0;i<key.length();i++){
+        for(int j=0;j<x1;j++){
+            arr[i][j]='Z';
+        }
+    }
+    int tmp=0,tmp1=0;
+        for(int j=0;j<plain_text.length();j++){
+            cout<<tmp<<" "<<j%key.length()<<" "<<j<<endl;
+            arr[j%key.length()][tmp]=plain_text[j];
+            // cout<<arr[j%key.length()][tmp+j%key.length()]<<j%key.length()<<endl;
+
+            if(j%key.length()==key.length()-1){
+                tmp+=1;
+                tmp1+=1;
+            }
+
+        }
+        double x=ceil((double)plain_text.length()/(double)key.length());
+        for(int i=0;i<key.length();i++){
+            for(int j=0;j<x;j++){
+                cout<<arr[i][j];
+            }
+            cout<<endl;
+        }
+        string unsorted_key=key;
+        sort(key.begin(),key.end());
+        cout<<"COLUMNAR CIPHER: ";
+        for(int k=0;k<key.length();k++){
+                    for(int j=0;j<x;j++){
+                        encrypted_text.push_back(arr[unsorted_key.find(key[k])][j]);
+                    }
+                }
+        return encrypted_text;
+
+    }
+string decrypt(string key,string sor_key,string encrypted_text){
+    string plain_text;
+    int x=ceil(encrypted_text.length()/(double)sor_key.length());
+    char arr[key.length()][x];
+    int tmp=0,tmp1=0;
+    // cout<<encrypted_text;
+    for(int i=0;i<encrypted_text.length();i++){
+        if(tmp1>x-1){
+            tmp1=0;
+        }
+            cout<<tmp<<" "<<i%key.length()<<" "<<encrypted_text[i]<<" "<<tmp1<<endl;
+
+        arr[tmp][tmp1]=encrypted_text[i];
+        tmp1+=1;
+        if(tmp1>x-1){
+            tmp1=0;
+        }
+        if(i%x==x-1){
+            tmp+=1;
+        }
+    }
+    int temp=0;
+    for(int i=0;i<key.length();i++){
+        for(int j=0;j<x;j++){
+            cout<<arr[i][j];
+            }
+            cout<<"\n";
+        }
+    int temp1=0;
+    for(int j=0;j<x;j++){
+    for(int i=0;i<key.length();i++){
+            plain_text.push_back(arr[sor_key.find(key[i])][j]);
+        }
+    }
+    return plain_text;
+
+}
+int main(){
+    string key;
+    string plain_text;
+    cout<<"ENTER PLAIN TEXT: ";
+    getline(cin,plain_text);
+    cout<<plain_text.length()<<endl;
+    cout<<"ENTER KEY: ";
+    cin>>key;
+    cout<<key<<endl;
+    string encrtpted_text=encrypt(key,plain_text);
+    cout<<"ENCRYPTED TEXT: ";
+    cout<<encrtpted_text<<endl;
+    cout<<"DECRYPTED TEXT: ";
+    string unsorted_key=key;
+    sort(key.begin(),key.end());
+    string decrypted_text=decrypt(unsorted_key,key,encrtpted_text);
+    cout<<decrypted_text<<endl;
+}
