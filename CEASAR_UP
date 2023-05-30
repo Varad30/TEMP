@@ -1,0 +1,76 @@
+#include<iostream>
+using namespace std;
+
+string encrypt(int key,string plain_text){
+    string encrypted_text;
+    for(int i=0;i<plain_text.length();i++){
+        if(plain_text[i]==' '){
+            encrypted_text.push_back(' ');
+        }
+        else{
+        if(isupper(plain_text[i])==true){
+        if((int(plain_text[i])+key)>90){
+            encrypted_text.push_back(char(int(64+((int(plain_text[i])+key)%90))));  // 90-64=26
+
+        }
+        else{
+            encrypted_text.push_back(char(int(plain_text[i])+key));
+        }
+        }
+        else{
+            if((int(plain_text[i])+key)>122){
+            encrypted_text.push_back(char(int(96+((int(plain_text[i])+key)%122))));  // 122-96=26
+        }
+            else{
+            encrypted_text.push_back(char(int(plain_text[i])+key));
+            }
+        }
+        }
+    }
+    return encrypted_text;
+}
+
+string decrypt(int key,string encrypted_text){
+    string plain_text;
+    for(int i=0;i<encrypted_text.length();i++){
+        if(encrypted_text[i]==' '){
+            // cout<<i;
+            plain_text.push_back(' ');
+        }
+        else{
+        if(isupper(encrypted_text[i])==true){
+        if((int(encrypted_text[i])-key)<65==true){
+        plain_text.push_back(char(26+((int(encrypted_text[i])-key)))); // 65-26
+        }
+        else{
+            plain_text.push_back(char(((int(encrypted_text[i])-key))));
+        }
+        }
+        else{
+            if((int(encrypted_text[i])-key)<97==true){
+            plain_text.push_back(char(26+((int(encrypted_text[i])-key)))); // 65-26
+            }
+            else{
+                plain_text.push_back(char(((int(encrypted_text[i])-key))));
+            } 
+        }
+        }
+
+    }
+    return plain_text;
+
+}
+int main(){
+    int key;
+    string plain_text;
+    cout<<"ENTER PLAIN TEXT: ";
+    getline(cin,plain_text);
+    cout<<"ENTER KEY: ";
+    cin>>key;
+    string encrypted_text=encrypt(key,plain_text);
+    cout<<encrypted_text<<endl;
+    string decrypted_text=decrypt(key,encrypted_text);
+
+    cout<<decrypted_text;
+    return 0;
+}
